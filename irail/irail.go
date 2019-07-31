@@ -1,7 +1,7 @@
 package irail
 
 import (
-	"github.com/go-resty/resty"
+	"github.com/go-resty/resty/v2"
 )
 
 const ua = "irail-csv/1.0 (https://github.com/meyskens/irail-csv)"
