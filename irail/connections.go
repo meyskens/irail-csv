@@ -202,10 +202,17 @@ func GetConnection(from, to, timesel, timeString, dateString string) ([]Connecti
 			arrTime, _ := strconv.ParseInt(via.Arrival.Time, 10, 64)
 			viaArrHour, viaArrMin, _ := time.Unix(arrTime, 0).Clock()
 
+			var platform = ""
+			if i == 0 {
+				platform = connection.Departure.Platforminfo.Name
+			} else {
+				platform = connection.Vias.Via[i-1].Departure.Platforminfo.Name //TODO: double check this logic
+			}
+
 			trainTypes += getVehicleType(via.Vehicle) + " "
 			viaText += fmt.Sprintf("%d:%d spoor %s: %s %s %d:%d | ",
 				viaDepHour, viaDepMin,
-				via.Departure.Platforminfo.Name,
+				platform,
 				getVehicleNumber(via.Vehicle),
 				via.Direction.Name,
 				viaArrHour, viaArrMin)
