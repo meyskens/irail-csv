@@ -1,0 +1,35 @@
+language: go
+dist: bionic
+go:
+  - '1.12.x'
+
+env:
+  - GO111MODULE=on
+
+stages:
+  - name: test
+  - name: release
+    if: tag IS present
+
+go_import_path: github.com/meyskens/irail-csv
+
+jobs:
+  include:
+    - name: 'Unit tests'
+      stage: test
+      script: go test ./...
+    - name: 'Tests build docker'
+      stage: test
+      script: docker build ./
+    - name: 'Push image to Docker Hub'
+      stage: release
+      script:
+        - docker build -t maartje/irail-csv:$TRAVIS_TAG ./
+        - echo $DOCKER_PASSWORD |docker login -u $DOCKER_USERNAME --password-stdin
+        - docker push maartje/irail-csv:$TRAVIS_TAG
+    - name: 'Push image to Dispatch'
+      stage: release
+      script:
+        - docker build -t registry.dispatch.sh/maartje/irail-csv:$TRAVIS_TAG ./
+        - echo $DISPATCH_PASSWORD | docker login -u registry --password-stdin registry.dispatch.sh
+        - docker push registry.dispatch.sh/maartje/irail-csv:$TRAVIS_TAG
