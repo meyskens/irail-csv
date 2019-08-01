@@ -183,7 +183,7 @@ func GetConnection(from, to, timesel, timeString, dateString string) ([]Connecti
 		trainTypes := getVehicleType(connection.Departure.Vehicle) + " "
 		viaText := ""
 		if len(connection.Vias.Via) == 0 {
-			viaText = fmt.Sprintf("%d:%d spoor %s: %s %s %d:%d",
+			viaText = fmt.Sprintf("%02d:%02d spoor %s: %s %s %02d:%02d",
 				depHour, depMin,
 				connection.Departure.Platforminfo.Name,
 				getVehicleNumber(connection.Departure.Vehicle),
@@ -210,7 +210,7 @@ func GetConnection(from, to, timesel, timeString, dateString string) ([]Connecti
 			}
 
 			trainTypes += getVehicleType(via.Vehicle) + " "
-			viaText += fmt.Sprintf("%d:%d spoor %s: %s %s %d:%d | ",
+			viaText += fmt.Sprintf("%02d:%02d spoor %s: %s %s %02d:%02d | ",
 				viaDepHour, viaDepMin,
 				platform,
 				getVehicleNumber(via.Vehicle),
@@ -222,7 +222,7 @@ func GetConnection(from, to, timesel, timeString, dateString string) ([]Connecti
 			depTime, _ = strconv.ParseInt(connection.Vias.Via[len(connection.Vias.Via)-1].Departure.Time, 10, 64)
 			viaDepHour, viaDepMin, _ := time.Unix(depTime, 0).Clock()
 
-			viaText += fmt.Sprintf("%d:%d spoor %s: %s %s %d:%d | ",
+			viaText += fmt.Sprintf("%02d:%02d spoor %s: %s %s %02d:%02d | ",
 				viaDepHour, viaDepMin,
 				connection.Vias.Via[len(connection.Vias.Via)-1].Departure.Platforminfo.Name,
 				getVehicleNumber(connection.Arrival.Vehicle),
@@ -234,8 +234,8 @@ func GetConnection(from, to, timesel, timeString, dateString string) ([]Connecti
 		viaText = strings.TrimRight(viaText, " | ")
 
 		connections = append(connections, Connection{
-			DepartureTime: fmt.Sprintf("%d:%d", depHour, depMin),
-			ArrivalTime:   fmt.Sprintf("%d:%d", arrHour, arrMin),
+			DepartureTime: fmt.Sprintf("%02d:%02d", depHour, depMin),
+			ArrivalTime:   fmt.Sprintf("%02d:%02d", arrHour, arrMin),
 			TrainTypes:    trainTypes,
 			ViaText:       viaText,
 		})
