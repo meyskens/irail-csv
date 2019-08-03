@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/gocarina/gocsv"
@@ -14,8 +13,6 @@ import (
 var stationList []irail.Station
 
 func main() {
-	os.Setenv("TZ", "Europe/Brussels")
-
 	var err error
 	stationList, err = irail.GetStationList()
 	if err != nil {

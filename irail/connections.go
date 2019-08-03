@@ -2,16 +2,11 @@ package irail
 
 import (
 	"fmt"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
 )
-
-func init() {
-	os.Setenv("TZ", "Europe/Brussels")
-}
 
 type conectionList struct {
 	Version    string `json:"version"`
