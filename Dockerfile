@@ -1,5 +1,8 @@
 FROM golang:1.12 as build
 
+ENV TZ=Europe/Brussels
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 COPY ./ /go/src/github.com/meyskens/irail-csv
 
 WORKDIR /go/src/github.com/meyskens/irail-csv
