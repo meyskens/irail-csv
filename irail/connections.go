@@ -170,10 +170,10 @@ func GetConnection(from, to, timesel, timeString, dateString string) ([]Connecti
 	connections := []Connection{}
 	for _, connection := range resp.Connection {
 		depTime, _ := strconv.ParseInt(connection.Departure.Time, 10, 64)
-		depHour, depMin, _ := time.Unix(depTime, 0).Clock()
+		depHour, depMin, _ := time.Unix(depTime, 0).Local().Clock()
 
 		arrTime, _ := strconv.ParseInt(connection.Arrival.Time, 10, 64)
-		arrHour, arrMin, _ := time.Unix(arrTime, 0).Clock()
+		arrHour, arrMin, _ := time.Unix(arrTime, 0).Local().Clock()
 
 		trainTypes := getVehicleType(connection.Departure.Vehicle) + " "
 		viaText := ""
@@ -193,9 +193,9 @@ func GetConnection(from, to, timesel, timeString, dateString string) ([]Connecti
 				depTime, _ = strconv.ParseInt(connection.Vias.Via[i-1].Departure.Time, 10, 64)
 			}
 
-			viaDepHour, viaDepMin, _ := time.Unix(depTime, 0).Clock()
+			viaDepHour, viaDepMin, _ := time.Unix(depTime, 0).Local().Clock()
 			arrTime, _ := strconv.ParseInt(via.Arrival.Time, 10, 64)
-			viaArrHour, viaArrMin, _ := time.Unix(arrTime, 0).Clock()
+			viaArrHour, viaArrMin, _ := time.Unix(arrTime, 0).Local().Clock()
 
 			var platform = ""
 			if i == 0 {
@@ -215,7 +215,7 @@ func GetConnection(from, to, timesel, timeString, dateString string) ([]Connecti
 
 		if len(connection.Vias.Via) != 0 {
 			depTime, _ = strconv.ParseInt(connection.Vias.Via[len(connection.Vias.Via)-1].Departure.Time, 10, 64)
-			viaDepHour, viaDepMin, _ := time.Unix(depTime, 0).Clock()
+			viaDepHour, viaDepMin, _ := time.Unix(depTime, 0).Local().Clock()
 
 			viaText += fmt.Sprintf("%02d:%02d spoor %s: %s %s %02d:%02d | ",
 				viaDepHour, viaDepMin,
