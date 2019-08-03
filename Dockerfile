@@ -11,7 +11,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo .
 
 FROM alpine
 
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache ca-certificates tzdata
 
 COPY --from=build /go/src/github.com/meyskens/irail-csv/irail-csv /usr/local/bin
 RUN chmod +x /usr/local/bin/irail-csv
