@@ -178,7 +178,7 @@ func GetConnection(from, to, timesel, timeString, dateString string) ([]Connecti
 		trainTypes := getVehicleType(connection.Departure.Vehicle) + " "
 		viaText := ""
 		if len(connection.Vias.Via) == 0 {
-			viaText = fmt.Sprintf("%02d:%02d spoor %s: %s %s %02d:%02d",
+			viaText = fmt.Sprintf("%02d:%02d track %s: %s %s %02d:%02d",
 				depHour, depMin,
 				connection.Departure.Platforminfo.Name,
 				getVehicleNumber(connection.Departure.Vehicle),
