@@ -205,24 +205,25 @@ func GetConnection(from, to, timesel, timeString, dateString string) ([]Connecti
 			}
 
 			trainTypes += getVehicleType(via.Vehicle) + " "
-			viaText += fmt.Sprintf("%02d:%02d spoor %s: %s %s %02d:%02d | ",
+			viaText += fmt.Sprintf("%02d:%02d track %s: %s to %s %02d:%02d %s | ",
 				viaDepHour, viaDepMin,
 				platform,
 				getVehicleNumber(via.Vehicle),
 				via.Direction.Name,
-				viaArrHour, viaArrMin)
+				viaArrHour, viaArrMin, via.Station)
 		}
 
 		if len(connection.Vias.Via) != 0 {
 			depTime, _ = strconv.ParseInt(connection.Vias.Via[len(connection.Vias.Via)-1].Departure.Time, 10, 64)
 			viaDepHour, viaDepMin, _ := time.Unix(depTime, 0).Local().Clock()
 
-			viaText += fmt.Sprintf("%02d:%02d spoor %s: %s %s %02d:%02d | ",
+			viaText += fmt.Sprintf("%02d:%02d track %s: %s %s %02d:%02d %s | ",
 				viaDepHour, viaDepMin,
 				connection.Vias.Via[len(connection.Vias.Via)-1].Departure.Platforminfo.Name,
 				getVehicleNumber(connection.Arrival.Vehicle),
 				connection.Arrival.Direction.Name,
-				arrHour, arrMin)
+				arrHour, arrMin,
+				connection.Arrival.Station)
 		}
 
 		trainTypes = strings.TrimRight(trainTypes, " ")
