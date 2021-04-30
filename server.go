@@ -22,7 +22,7 @@ func main() {
 	e := echo.New()
 	e.GET("/stations", getStations)
 	e.GET("/connections", getConnections)
-	e.Logger.Fatal(e.Start(":80"))
+	e.Logger.Fatal(e.Start(":8080"))
 }
 
 func getStations(c echo.Context) error {
