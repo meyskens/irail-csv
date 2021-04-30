@@ -33,5 +33,5 @@ jobs:
     - name: Build the Dispatch Docker image
       run: docker buildx build . --file Dockerfile --tag registry.dispatch.sh/maartje/irail-csv:$(git describe --tag) --push --platform "linux/amd64,linux/arm64,linux/arm"
     
-    - name: Build the Dispatch Docker image
-      run: docker buildx build . --file Dockerfile --tag ghcr.io/irail-csv:$(git describe --tag) --push --platform "linux/amd64,linux/arm64,linux/arm"
+    - name: Build the Docker image
+      run: docker buildx build . --file Dockerfile --tag ghcr.io/meyskens/irail-csv:$(git describe --tag) --push --platform "linux/amd64,linux/arm64,linux/arm"
